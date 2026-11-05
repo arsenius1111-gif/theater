@@ -18,6 +18,7 @@ namespace {
         std::cin.clear();
         std::cin.ignore(
             std::numeric_limits<std::streamsize>::max(), '\n');
+
         std::cout << "Ошибка ввода. Введите число.\n";
         return false;
     }
@@ -74,36 +75,23 @@ namespace {
         switch (type) {
         case 1: {
             int dancersCount = 0;
-            int actsCount = 0;
-            int orchestraSize = 0;
 
             std::cout << "Введите количество танцоров: ";
+
             if (!readChoice(dancersCount) || dancersCount <= 0) {
                 std::cout << "Количество танцоров должно быть положительным.\n";
                 return nullptr;
             }
 
-            std::cout << "Введите количество актов: ";
-            if (!readChoice(actsCount) || actsCount <= 0) {
-                std::cout << "Количество актов должно быть положительным.\n";
-                return nullptr;
-            }
-
-            std::cout << "Введите размер оркестра: ";
-            if (!readChoice(orchestraSize) || orchestraSize < 0) {
-                std::cout << "Размер оркестра не может быть отрицательным.\n";
-                return nullptr;
-            }
-
             return std::make_shared<Ballet>(
-                title, director, duration, ageRestriction,
-                dancersCount, actsCount, orchestraSize);
+                title, director, duration, ageRestriction, dancersCount);
         }
 
         case 2: {
             int recitatives = 0;
 
             std::cout << "Есть ли речитативы? (1 — да, 0 — нет): ";
+
             if (!readChoice(recitatives) ||
                 (recitatives != 0 && recitatives != 1)) {
                 std::cout << "Введите 1 или 0.\n";
@@ -119,6 +107,7 @@ namespace {
             int liveBand = 0;
 
             std::cout << "Есть ли живая музыкальная группа? (1 — да, 0 — нет): ";
+
             if (!readChoice(liveBand) ||
                 (liveBand != 0 && liveBand != 1)) {
                 std::cout << "Введите 1 или 0.\n";
@@ -137,7 +126,7 @@ namespace {
     }
 
     void managePerformance(Performance& performance) {
-    bool running = true;
+        bool running = true;
 
         while (running) {
             std::cout << "\n========== УПРАВЛЕНИЕ: "
@@ -156,7 +145,8 @@ namespace {
 
             switch (action) {
             case 1:
-                performance.displayInfo();
+                performance.
+                displayInfo();
                 break;
 
             case 2:
@@ -176,6 +166,7 @@ namespace {
                     performance.setTitle(title);
                     std::cout << "Название успешно изменено.\n";
                 }
+
                 break;
             }
 
@@ -192,6 +183,7 @@ namespace {
 
 void PerformanceMenu::showAll(
     const std::vector<std::shared_ptr<Performance>>& catalog) {
+
     std::cout << "\n========== КАТАЛОГ СПЕКТАКЛЕЙ ==========\n";
 
     if (catalog.empty()) {
@@ -210,6 +202,7 @@ void PerformanceMenu::showAll(
 
 void PerformanceMenu::create(
     std::vector<std::shared_ptr<Performance>>& catalog) {
+
     std::cout << "\n========== ДОБАВЛЕНИЕ СПЕКТАКЛЯ ==========\n";
 
     std::shared_ptr<Performance> performance = createPerformance();
@@ -225,6 +218,7 @@ void PerformanceMenu::create(
 
 void PerformanceMenu::compare(
     const std::vector<std::shared_ptr<Performance>>& catalog) {
+
     if (catalog.size() < 2) {
         std::cout << "Для сравнения нужны минимум два спектакля.\n";
         return;
@@ -283,14 +277,13 @@ void PerformanceMenu::showInheritanceDemo() {
 
     performances.push_back(std::make_shared<Ballet>(
         "Лебединое озеро", "Мариус Петипа",
-        140, 6, 24, 4, 30));
+        140, 6, 24));
 
     performances.push_back(std::make_shared<Opera>(
         "Евгений Онегин", "Константин Сергеев",
         160, 12, true));
 
-    performances.
-     push_back(std::make_shared<Musical>(
+    performances.push_back(std::make_shared<Musical>(
         "Чикаго", "Боб Фосси",
         150, 16, true));
 
@@ -314,7 +307,6 @@ void PerformanceMenu::showInheritanceDemo() {
             running = false;
             continue;
         }
-
         if (choice < 1 || choice > 3) {
             std::cout << "Такого пункта меню нет.\n";
             continue;
