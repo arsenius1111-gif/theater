@@ -124,7 +124,7 @@ Hall& Hall::operator-=(const Performance& p) {
             return performance && *performance == p;
         });
 
-    if (!index) {
+    if (!index.has_value()) {
         std::cout << "Такого спектакля нет в репертуаре.\n";
         return *this;
     }
