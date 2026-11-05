@@ -57,9 +57,20 @@ void Ballet::displayInfo() const {
 }
 
 void Ballet::performSpecialAction() const {
-    std::cout << "\n=== Танцевальное выступление ===\n";
-    std::cout << "Балет \"" << getTitle()
-              << "\" исполняется "
-              << dancersCount
-              << " танцорами.\n";
+
+ std::cout<<"\n=== Тип баллета\"" << getTitle()<<"\"===\n";
+
+ if (dancersCount<=10) {
+    std::cout << "Это Камерный баллет(миниатюра).\n";
+    std::cout << "На сцене всего"<< dancersCount << "артистов.\n";
+ }
+
+ else if (dancersCount<=30){
+    std::cout <<"Этот классический баллет.\n";
+ }
+
+ else{
+    std::cout<< "Этот Гранд-Балет(эпическое зрелище)!\n";
+ }
+
 }
