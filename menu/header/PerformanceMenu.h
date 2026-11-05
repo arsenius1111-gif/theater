@@ -17,6 +17,9 @@ public:
         const Collection<std::shared_ptr<Performance>>& catalog);
 
     static void showInheritanceDemo();
+
+    static void manageCollection(
+        Collection<std::shared_ptr<Performance>>& catalog);
 };
 
 #endif

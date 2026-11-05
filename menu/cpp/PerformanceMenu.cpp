@@ -239,7 +239,7 @@ void PerformanceMenu::compare(
         return;
     }
 
-    if (i1 < 1 || i1 > static_cast<int>(catalog.size()) ||
+    if (i1 < 1  || i1 > static_cast<int>(catalog.size())|| 
         i2 < 1 || i2 > static_cast<int>(catalog.size())) {
         std::cout << "Указан неверный номер спектакля.\n";
         return;
@@ -315,5 +315,156 @@ void PerformanceMenu::showInheritanceDemo() {
             performances[static_cast<std::size_t>(choice - 1)];
 
         managePerformance(*performance);
+    }
+}
+
+void PerformanceMenu::manageCollection(
+    Collection<std::shared_ptr<Performance>>& catalog) {
+
+    bool running = true;
+
+    while (running) {
+        std::cout << "\n========== РАБОТА С КОЛЛЕКЦИЕЙ ==========\n";
+        std::cout << "1. Показать все элементы\n";
+        std::cout << "2. Добавить элемент\n";
+        std::cout << "3. Найти спектакль по названию\n";
+        std::cout << "4. Удалить элемент по номеру\n";
+        std::cout << "5. Получить элемент по индексу\n";
+        std::cout << "6. Показать размер коллекции\n";
+        std::cout << "7. Перебрать элементы итераторами\n";
+        std::cout << "0. Назад\n";
+        std::cout << "Ваш выбор: ";
+
+        int choice = -1;
+
+        if (!readChoice(choice)) {
+            continue;
+        }
+
+        switch (choice) {
+        case 1:
+            showAll(catalog);
+            break;
+
+        case 2:
+            create(catalog);
+            break;
+
+        case 3: {
+            std::string title;
+
+            std::cout << "Введите название спектакля для поиска: ";
+            std::cin >> std::ws;
+            std::getline(std::cin, title);
+
+            auto result = catalog.findIf(
+                [&title](const std::shared_ptr<Performance>& performance) {
+                    return performance && performance->getTitle() == title;
+                });
+
+            if (result.has_value()) {
+                std::cout << "Спектакль найден. Номер: "
+                          << *result + 1 << "\n";
+
+                catalog.get(*result)->displayInfo();
+            } else {
+                std::cout << "Спектакль не найден.\n";
+            }
+
+            break;
+        }
+
+        case 4: {
+            if (catalog.empty()) {
+                std::cout << "Коллекция пуста.\n";
+                break;
+            }
+
+            showAll(catalog);
+
+            int index = 0;
+
+            std::cout << "Введите номер элемента для удаления: ";
+
+            if (!readChoice(index)) {
+                break;
+            }
+
+            if (index < 1 || index > static_cast<int>(catalog.size())) {
+                std::cout << "Неверный номер элемента.\n";
+                break;
+            }
+
+            if (catalog.removeAt(static_cast<std::size_t>(index - 1))) {
+                std::cout << "Элемент успешно удалён.\n";
+            }
+
+            break;
+        }
+
+        case 5: {
+            if (catalog.empty()) {
+                std::cout << "Коллекция пуста.\n";
+                break;
+            }
+
+            int index = 0;
+
+            std::cout << "Введите индекс элемента (начиная с 1): ";
+
+            if (!readChoice(index)) {
+                break;
+            }
+
+            if (index < 1 || index > static_cast<int>(catalog.size())) {
+                std::cout << "Неверный индекс.\n";
+                break;
+            }
+
+            const auto& performance =
+                catalog.get(static_cast<std::size_t>(index - 1));
+
+            if (performance) {
+                performance->displayInfo();
+            } else {
+                std::cout << "Элемент не содержит спектакль.\n";
+            }
+
+            break;
+        }
+
+        case 6:
+            std::cout << "Количество элементов в коллекции: "
+                      << catalog.size() << "\n";
+            break;
+
+        case 7: {
+            if (catalog.empty()) {
+                std::cout << "Коллекция пуста.\n";
+                break;
+            }
+
+            std::cout << "\nПеребор коллекции с помощью итераторов:\n";
+
+            std::size_t index = 1;
+
+            for (auto it = catalog.begin(); it != catalog.end(); ++it) {
+                std::cout << "\nЭлемент " << index++ << ":\n";
+
+                if (*it) {
+                    (*it)->displayInfo();
+                }
+            }
+
+            break;
+        }
+
+        case 0:
+        running = false;
+            break;
+
+        default:
+            std::cout << "Такого пункта меню нет.\n";
+        }
     }
 }

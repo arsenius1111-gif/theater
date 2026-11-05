@@ -51,6 +51,7 @@ void MainMenu::run() {
         std::cout << "4. Добавить спектакль в каталог\n";
         std::cout << "5. Создать зал\n";
         std::cout << "6. Демонстрация полиморфизма\n";
+        std::cout << "7. Работа с коллекцией спектаклей\n";
         std::cout << "0. Выход\n";
         std::cout << "Выберите действие: ";
 
@@ -72,6 +73,8 @@ void MainMenu::run() {
             HallMenu::create(halls);
         } else if (choice == 6) {
             PerformanceMenu::showInheritanceDemo();
+        } else if (choice == 7) {
+            PerformanceMenu::manageCollection(catalog);
         } else if (choice == 0) {
             running = false;
             std::cout << "Программа завершена.\n";
