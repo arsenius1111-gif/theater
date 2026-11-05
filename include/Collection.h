@@ -23,7 +23,7 @@ public:
 
     void add(T&& value) {
         items.push_back(std::move(value));
-    }
+    }   
 
     template <typename... Args>
     void emplace(Args&&... args) {

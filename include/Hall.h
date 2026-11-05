@@ -2,15 +2,15 @@
 #define HALL_H
 
 #include "Performance.h"
+#include "Collection.h"
 #include <memory>
-#include <vector>
 
 class Hall {
 private:
     int number = 0;
     int capacity = 0;
     int ticketsSold = 0;
-    std::vector<std::shared_ptr<Performance>> performances;
+    Collection<std::shared_ptr<Performance>> performances;
 
 public:
     Hall(int number_, int capacity_);
@@ -24,10 +24,10 @@ public:
     bool sellTickets(int count);
     bool addPerformance(std::shared_ptr<Performance> p);
 
-    const std::vector<std::shared_ptr<Performance>>&
+    const Collection<std::shared_ptr<Performance>>&
         getPerformances() const;
 
-    std::vector<std::shared_ptr<Performance>>&
+    Collection<std::shared_ptr<Performance>>&
         getPerformances();
 
     void displayFullInfo() const;
@@ -38,4 +38,4 @@ public:
     friend void printHallAnalytics(const Hall& hall);
 };
 
-#endif
+#endif 
