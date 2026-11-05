@@ -3,16 +3,16 @@
 
 #include "Hall.h"
 #include "Performance.h"
+#include "Collection.h"
 #include <memory>
-#include <vector>
 
 class HallMenu {
 public:
-    static void create(std::vector<Hall>& halls);
+    static void create(Collection<Hall>& halls);
 
     static void manage(
-        std::vector<Hall>& halls,
-        const std::vector<std::shared_ptr<Performance>>& catalog);
+        Collection<Hall>& halls,
+        const Collection<std::shared_ptr<Performance>>& catalog);
 };
 
 #endif

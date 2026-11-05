@@ -2,7 +2,6 @@
 #include <iostream>
 #include <limits>
 #include <memory>
-#include <vector>
 
 namespace {
     bool readNumber(int& value) {
@@ -12,13 +11,13 @@ namespace {
 
         std::cin.clear();
         std::cin.ignore(
-            std::numeric_limits<std::streamsize>::max(), '\n');
+            (std::numeric_limits<std::streamsize>::max)(), '\n');
 
         std::cout << "Ошибка ввода. Введите целое число.\n";
         return false;
     }
 
-    bool selectHall(const std::vector<Hall>& halls, int& index) {
+    bool selectHall(const Collection<Hall>& halls, int& index) {
         if (halls.empty()) {
             std::cout << "Залов пока нет.\n";
             return false;
@@ -49,7 +48,7 @@ namespace {
     }
 
     bool selectPerformance(
-        const std::vector<std::shared_ptr<Performance>>& catalog,
+        const Collection<std::shared_ptr<Performance>>& catalog,
         int& index) {
         if (catalog.empty()) {
             std::cout << "Каталог спектаклей пуст.\n";
@@ -99,7 +98,7 @@ namespace {
 
     void addPerformance(
         Hall& hall,
-        const std::vector<std::shared_ptr<Performance>>& catalog) {
+        const Collection<std::shared_ptr<Performance>>& catalog) {
         int index = 0;
 
         if (selectPerformance(catalog, index)) {
@@ -154,7 +153,7 @@ namespace {
 
         if (readNumber(capacity)) {
             hall.setCapacity(capacity);
-        }
+            }
     }
 
     void showHallMenu() {
@@ -171,7 +170,7 @@ namespace {
     void processHallChoice(
         int choice,
         Hall& hall,
-        const std::vector<std::shared_ptr<Performance>>& catalog,
+        const Collection<std::shared_ptr<Performance>>& catalog,
         bool& running) {
         switch (choice) {
         case 1:
@@ -201,7 +200,7 @@ namespace {
     }
 }
 
-void HallMenu::create(std::vector<Hall>& halls) {
+void HallMenu::create(Collection<Hall>& halls) {
     int number = 0;
     int capacity = 0;
 
@@ -235,13 +234,13 @@ void HallMenu::create(std::vector<Hall>& halls) {
         return;
     }
 
-    halls.emplace_back(number, capacity);
+    halls.emplace(number, capacity);
     std::cout << "Зал успешно создан.\n";
 }
 
 void HallMenu::manage(
-    std::vector<Hall>& halls,
-    const std::vector<std::shared_ptr<Performance>>& catalog) {
+    Collection<Hall>& halls,
+    const Collection<std::shared_ptr<Performance>>& catalog) {
     int index = 0;
 
     if (!selectHall(halls, index)) {

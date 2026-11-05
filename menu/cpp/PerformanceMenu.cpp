@@ -7,7 +7,6 @@
 #include <memory>
 #include <string>
 #include <utility>
-#include <vector>
 
 namespace {
     bool readChoice(int& choice) {
@@ -17,7 +16,7 @@ namespace {
 
         std::cin.clear();
         std::cin.ignore(
-            std::numeric_limits<std::streamsize>::max(), '\n');
+            (std::numeric_limits<std::streamsize>::max)(), '\n');
 
         std::cout << "Ошибка ввода. Введите число.\n";
         return false;
@@ -145,8 +144,7 @@ namespace {
 
             switch (action) {
             case 1:
-                performance.
-                displayInfo();
+                performance.displayInfo();
                 break;
 
             case 2:
@@ -182,7 +180,7 @@ namespace {
 }
 
 void PerformanceMenu::showAll(
-    const std::vector<std::shared_ptr<Performance>>& catalog) {
+    const Collection<std::shared_ptr<Performance>>& catalog) {
 
     std::cout << "\n========== КАТАЛОГ СПЕКТАКЛЕЙ ==========\n";
 
@@ -201,7 +199,7 @@ void PerformanceMenu::showAll(
 }
 
 void PerformanceMenu::create(
-    std::vector<std::shared_ptr<Performance>>& catalog) {
+    Collection<std::shared_ptr<Performance>>& catalog) {
 
     std::cout << "\n========== ДОБАВЛЕНИЕ СПЕКТАКЛЯ ==========\n";
 
@@ -212,12 +210,12 @@ void PerformanceMenu::create(
         return;
     }
 
-    catalog.push_back(std::move(performance));
+    catalog.add(std::move(performance));
     std::cout << "Спектакль добавлен в каталог.\n";
 }
 
 void PerformanceMenu::compare(
-    const std::vector<std::shared_ptr<Performance>>& catalog) {
+    const Collection<std::shared_ptr<Performance>>& catalog) {
 
     if (catalog.size() < 2) {
         std::cout << "Для сравнения нужны минимум два спектакля.\n";
@@ -273,17 +271,17 @@ void PerformanceMenu::compare(
 }
 
 void PerformanceMenu::showInheritanceDemo() {
-    std::vector<std::shared_ptr<Performance>> performances;
+    Collection<std::shared_ptr<Performance>> performances;
 
-    performances.push_back(std::make_shared<Ballet>(
+    performances.add(std::make_shared<Ballet>(
         "Лебединое озеро", "Мариус Петипа",
         140, 6, 24));
 
-    performances.push_back(std::make_shared<Opera>(
+    performances.add(std::make_shared<Opera>(
         "Евгений Онегин", "Константин Сергеев",
         160, 12, true));
 
-    performances.push_back(std::make_shared<Musical>(
+    performances.add(std::make_shared<Musical>(
         "Чикаго", "Боб Фосси",
         150, 16, true));
 
@@ -307,6 +305,7 @@ void PerformanceMenu::showInheritanceDemo() {
             running = false;
             continue;
         }
+
         if (choice < 1 || choice > 3) {
             std::cout << "Такого пункта меню нет.\n";
             continue;

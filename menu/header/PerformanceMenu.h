@@ -2,19 +2,19 @@
 #define PERFORMANCEMENU_H
 
 #include "Performance.h"
+#include "Collection.h"
 #include <memory>
-#include <vector>
 
 class PerformanceMenu {
 public:
     static void showAll(
-        const std::vector<std::shared_ptr<Performance>>& catalog);
+        const Collection<std::shared_ptr<Performance>>& catalog);
 
     static void create(
-        std::vector<std::shared_ptr<Performance>>& catalog);
+        Collection<std::shared_ptr<Performance>>& catalog);
 
     static void compare(
-        const std::vector<std::shared_ptr<Performance>>& catalog);
+        const Collection<std::shared_ptr<Performance>>& catalog);
 
     static void showInheritanceDemo();
 };

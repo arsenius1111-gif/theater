@@ -3,13 +3,13 @@
 
 #include "Hall.h"
 #include "Performance.h"
+#include "Collection.h"
 #include <memory>
-#include <vector>
 
 class MainMenu {
 private:
-    std::vector<Hall> halls;
-    std::vector<std::shared_ptr<Performance>> catalog;
+    Collection<Hall> halls;
+    Collection<std::shared_ptr<Performance>> catalog;
 
     void initDatabase();
     void clearInput() const;

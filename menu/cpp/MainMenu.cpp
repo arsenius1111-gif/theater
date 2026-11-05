@@ -15,23 +15,23 @@ MainMenu::MainMenu() {
 void MainMenu::clearInput() const {
     std::cin.clear();
     std::cin.ignore(
-        std::numeric_limits<std::streamsize>::max(), '\n');
+        (std::numeric_limits<std::streamsize>::max)(), '\n');
 }
 
 void MainMenu::initDatabase() {
-    halls.emplace_back(1, 100);
-    halls.emplace_back(2, 50);
+    halls.emplace(1, 100);
+    halls.emplace(2, 50);
 
-    catalog.push_back(std::make_shared<Opera>(
+    catalog.add(std::make_shared<Opera>(
         "Гамлет", "Уильям Шекспир", 150, 16, true));
 
-    catalog.push_back(std::make_shared<Ballet>(
+    catalog.add(std::make_shared<Ballet>(
         "Щелкунчик", "Пётр Чайковский", 120, 6, 24, 2, 30));
 
-    catalog.push_back(std::make_shared<Musical>(
+    catalog.add(std::make_shared<Musical>(
         "Ревизор", "Николай Гоголь", 140, 12, false));
 
-    catalog.push_back(std::make_shared<Opera>(
+    catalog.add(std::make_shared<Opera>(
         "Мастер и Маргарита", "Михаил Булгаков", 180, 16, false));
 
     halls[0] += catalog[0];
