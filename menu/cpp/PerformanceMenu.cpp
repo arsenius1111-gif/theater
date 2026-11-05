@@ -268,16 +268,15 @@ namespace {
 
         std::size_t index = 1;
 
-        std::ranges::for_each(
-            catalog.begin(),
-            catalog.end(),
-            [&index](const std::shared_ptr<Performance>& performance) {
-                std::cout << "\nЭлемент " << index++ << ":\n";
+       std::ranges::for_each(
+    catalog,
+    [&index](const std::shared_ptr<Performance>& performance) {
+        std::cout << "\nЭлемент " << index++ << ":\n";
 
-                if (performance) {
-                    performance->displayInfo();
-                }
-            });
+        if (performance) {
+            performance->displayInfo();
+        }
+    });
     }
 }
 
