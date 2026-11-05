@@ -26,7 +26,7 @@ void MainMenu::initDatabase() {
         "Гамлет", "Уильям Шекспир", 150, 16, true));
 
     catalog.add(std::make_shared<Ballet>(
-        "Щелкунчик", "Пётр Чайковский", 120, 6, 24, 2, 30));
+        "Щелкунчик", "Пётр Чайковский", 120, 6, 24));
 
     catalog.add(std::make_shared<Musical>(
         "Ревизор", "Николай Гоголь", 140, 12, false));
