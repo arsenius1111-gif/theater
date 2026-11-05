@@ -38,4 +38,4 @@ public:
     friend void printHallAnalytics(const Hall& hall);
 };
 
-#endif 
+#endif

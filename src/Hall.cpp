@@ -118,17 +118,19 @@ Hall& Hall::operator+=(std::shared_ptr<Performance> p) {
 }
 
 Hall& Hall::operator-=(const Performance& p) {
-    for (std::size_t i = 0; i < performances.size(); ++i) {
-        const auto& performance = performances[i];
+    const auto index = findByPredicate(
+        performances,
+        [&p](const std::shared_ptr<Performance>& performance) {
+            return performance && *performance == p;
+        });
 
-        if (performance && *performance == p) {
-            performances.removeAt(i);
-            std::cout << "Спектакль удалён из репертуара.\n";
-            return *this;
-        }
+    if (!index) {
+        std::cout << "Такого спектакля нет в репертуаре.\n";
+        return *this;
     }
 
-    std::cout << "Такого спектакля нет в репертуаре.\n";
+    performances.removeAt(*index);
+    std::cout << "Спектакль удалён из репертуара.\n";
     return *this;
 }
 
@@ -154,6 +156,6 @@ void printHallAnalytics(const Hall& hall) {
     std::cout << "Заполняемость: " << occupancy << "%\n";
     std::cout << "Количество спектаклей: "
               << hall.performances.size() << '\n';
-    std::cout << "Общая длительность репертуара: "
-    << totalDuration << " мин.\n";
+              std::cout << "Общая длительность репертуара: "
+              << totalDuration << " мин.\n";
 }

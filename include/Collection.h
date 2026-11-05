@@ -2,6 +2,7 @@
 #define COLLECTION_H
 
 #include <cstddef>
+#include <functional>
 #include <optional>
 #include <stdexcept>
 #include <utility>
@@ -23,7 +24,7 @@ public:
 
     void add(T&& value) {
         items.push_back(std::move(value));
-    }   
+    }
 
     template <typename... Args>
     void emplace(Args&&... args) {
@@ -35,9 +36,7 @@ public:
             return false;
         }
 
-        items.erase(items.begin() +
-            static_cast<std::ptrdiff_t>(index));
-
+        items.erase(items.begin() + static_cast<std::ptrdiff_t>(index));
         return true;
     }
 
@@ -90,33 +89,15 @@ public:
         return items[index];
     }
 
-    iterator begin() noexcept {
-        return items.begin();
-    }
-
-    iterator end() noexcept {
-        return items.end();
-    }
-
-    const_iterator begin() const noexcept {
-        return items.begin();
-    }
-
-    const_iterator end() const noexcept {
-        return items.end();
-    }
-
-    const_iterator cbegin() const noexcept {
-        return items.cbegin();
-    }
-
-    const_iterator cend() const noexcept {
-        return items.cend();
-    }
+    iterator begin() noexcept { return items.begin(); }
+    iterator end() noexcept { return items.end(); }
+    const_iterator begin() const noexcept { return items.begin(); }
+    const_iterator end() const noexcept { return items.end(); }
+    const_iterator cbegin() const noexcept { return items.cbegin(); }
+    const_iterator cend() const noexcept { return items.cend(); }
 
     template <typename OutputFunction>
-    void display(std::ostream& output,
-        OutputFunction formatter) const {
+    void display(std::ostream& output, OutputFunction formatter) const {
         for (const T& item : items) {
             formatter(output, item);
         }
@@ -127,7 +108,6 @@ template <typename T, typename Predicate>
 std::optional<std::size_t> findByPredicate(
     const Collection<T>& collection,
     Predicate predicate) {
-
     return collection.findIf(predicate);
 }
 

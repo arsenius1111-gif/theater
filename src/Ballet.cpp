@@ -49,4 +49,4 @@ void Ballet::performSpecialAction() const {
         std::cout << "Количество танцоров: "
                   << dancersCount << ".\n";
     }
-}  
+}
