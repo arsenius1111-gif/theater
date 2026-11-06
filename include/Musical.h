@@ -2,6 +2,7 @@
 #define MUSICAL_H
 
 #include "Performance.h"
+#include <string>
 
 class Musical : public Performance {
 private:
@@ -18,6 +19,9 @@ public:
 
     bool getHasLiveBand() const;
     void setHasLiveBand(bool value);
+
+    // Специальный метод: определяет тип мюзикла
+    std::string getMusicalType() const;
 
     std::string getType() const override;
     void displayInfo() const override;

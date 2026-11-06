@@ -2,6 +2,7 @@
 #define OPERA_H
 
 #include "Performance.h"
+#include <string>
 
 class Opera : public Performance {
 private:
@@ -18,6 +19,9 @@ public:
 
     bool getHasRecitatives() const;
     void setHasRecitatives(bool value);
+
+    // Специальный метод: определяет тип оперы
+    std::string getOperaType() const;
 
     std::string getType() const override;
     void displayInfo() const override;
