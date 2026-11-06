@@ -38,13 +38,12 @@ void Opera::performSpecialAction() const {
         std::cout << "  - акцент на вокальных партиях\n";
     }
 
-    const int dur = getDuration();
     std::cout << "\n[2] Масштаб постановки (длительность "
-              << dur << " мин):\n";
-    if (dur >= 180) {
+              << getDuration() << " мин):\n";
+    if (getDuration() >= 180) {
         std::cout << "  - большая опера (grand opera)\n";
         std::cout << "  - 4–5 актов, большой оркестр и хор\n";
-    } else if (dur >= 120) {
+    } else if (getDuration() >= 120) {
         std::cout << "  - опера в двух актах\n";
         std::cout << "  - средний оркестровый состав\n";
     } else {
@@ -53,13 +52,13 @@ void Opera::performSpecialAction() const {
     }
 
     std::cout << "\n[3] Итоговая классификация:\n";
-    if (!hasRecitatives && dur < 120) {
+    if (!hasRecitatives && getDuration() < 120) {
         std::cout << "  -> Камерная номерная опера\n";
         std::cout << "     (короткая, без речитативов, из отдельных номеров)\n";
     } else if (!hasRecitatives) {
         std::cout << "  -> Номерная опера\n";
         std::cout << "     (полнометражная, но без речитативов)\n";
-    } else if (dur >= 180) {
+    } else if (getDuration() >= 180) {
         std::cout << "  -> Большая опера (grand opera)\n";
         std::cout << "     (полнометражная, с речитативами, крупный состав)\n";
     } else {

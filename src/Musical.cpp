@@ -50,9 +50,9 @@ void Musical::performSpecialAction() const {
         std::cout << "  - живой состав не задействован\n";
     }
 
-    const int dur = getDuration();
-    std::cout << "\n[2] Масштаб (длительность " << dur << " мин):\n";
-    if (dur >= 150) {
+    std::cout << "\n[2] Масштаб (длительность "
+              << getDuration() << " мин):\n";
+    if (getDuration() >= 150) {
         std::cout << "  - два акта с антрактом\n";
         std::cout << "  - большой сценический формат\n";
     } else {
@@ -60,11 +60,11 @@ void Musical::performSpecialAction() const {
     }
 
     std::cout << "\n[3] Итоговая классификация:\n";
-    if (!hasLiveBand && dur < 150)
+    if (!hasLiveBand && getDuration() < 150)
         std::cout << "  -> Компактный фонограммный мюзикл\n";
     else if (!hasLiveBand)
         std::cout << "  -> Полнометражный фонограммный мюзикл\n";
-    else if (dur >= 150)
+    else if (getDuration() >= 150)
         std::cout << "  -> Большой сценический мюзикл с живой группой\n";
     else
         std::cout << "  -> Камерный живой мюзикл\n";
