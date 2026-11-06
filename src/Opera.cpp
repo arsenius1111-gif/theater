@@ -52,6 +52,7 @@ void Opera::performSpecialAction() const {
     const std::string type = getOperaType();
 
     if (type == "Большая опера (grand opera)") {
+         std::cout << "Это камерная опера.\n";
         std::cout << "Это масштабная опера с речитативами.\n";
         std::cout << "Длительность — не менее 180 минут, обычно 4–5 актов.\n";
         std::cout << "Сюжет развивается через чередование арий, ансамблей,\n";
