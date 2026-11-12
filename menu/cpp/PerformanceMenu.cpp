@@ -201,6 +201,27 @@ namespace {
         }
     }
 
+    void findPerformanceByDirector(
+        const Collection<std::shared_ptr<Performance>>&catalog) {
+            std::string director;
+            std::cout << "Введите имя режиссера для поиска: ";
+            std::cin >> std::ws;
+            std::getline(std::cin, director);
+
+            if (const auto result = catalog.findIf(
+                [&director](const std::shared_ptr<Performance>&performance)
+            {
+                return performance && performance->getDirector() ==director;});
+                result.has_value()) {
+                    std::cout << "Спектакль найден. Номер: " <<*result + 1 << "\n";
+                    catalog.get(*result)->displayInfo();
+            } else {
+                std::cout << "Спектакль данного режиссера не найден./n";
+
+            }
+        }
+    
+
     void removePerformance(
         Collection<std::shared_ptr<Performance>>& catalog) {
         if (catalog.empty()) {
@@ -431,10 +452,11 @@ void PerformanceMenu::manageCollection(
         std::cout << "1. Показать все элементы\n";
         std::cout << "2. Добавить элемент\n";
         std::cout << "3. Найти спектакль по названию\n";
-        std::cout << "4. Удалить элемент по номеру\n";
-        std::cout << "5. Получить элемент по индексу\n";
-        std::cout << "6. Показать размер коллекции\n";
-        std::cout << "7. Перебрать элементы итераторами\n";
+        std::cout << "4. Найти спектакль по режиссеру\n";
+        std::cout << "5. Удалить элемент по номеру\n";
+        std::cout << "6. Получить элемент по индексу\n";
+        std::cout << "7. Показать размер коллекции\n";
+        std::cout << "8. Перебрать элементы итераторами\n";
         std::cout << "0. Назад\n";
         std::cout << "Ваш выбор: ";
 
@@ -456,21 +478,25 @@ void PerformanceMenu::manageCollection(
         case 3:
         findPerformance(catalog);
             break;
-
+            
         case 4:
+        findPerformanceByDirector(catalog);
+        break;
+
+        case 5:
             removePerformance(catalog);
             break;
 
-        case 5:
+        case 6:
             getPerformance(catalog);
             break;
 
-        case 6:
+        case 7:
             std::cout << "Количество элементов в коллекции: "
                       << catalog.size() << "\n";
             break;
 
-        case 7:
+        case 8:
             iterateCollection(catalog);
             break;
 
