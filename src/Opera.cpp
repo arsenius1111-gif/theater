@@ -65,4 +65,4 @@ void Opera::performSpecialAction() const {
         std::cout << "  -> Камерная опера с речитативами\n";
         std::cout << "     (речитативы есть, но состав небольшой)\n";
     }
-}
+} 
