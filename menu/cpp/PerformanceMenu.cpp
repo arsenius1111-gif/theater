@@ -201,25 +201,39 @@ namespace {
         }
     }
 
-    void findPerformanceByDirector(
-        const Collection<std::shared_ptr<Performance>>&catalog) {
-            std::string director;
-            std::cout << "Введите имя режиссера для поиска: ";
-            std::cin >> std::ws;
-            std::getline(std::cin, director);
+   void findPerformanceByDirector(
+    const Collection<std::shared_ptr<Performance>>& catalog) {
 
-            if (const auto result = catalog.findIf(
-                [&director](const std::shared_ptr<Performance>&performance)
-            {
-                return performance && performance->getDirector() ==director;});
-                result.has_value()) {
-                    std::cout << "Спектакль найден. Номер: " <<*result + 1 << "\n";
-                    catalog.get(*result)->displayInfo();
-            } else {
-                std::cout << "Спектакль данного режиссера не найден./n";
+    std::string director;
 
-            }
-        }
+    std::cout << "Введите имя или фамилию режиссёра: ";
+    std::cin >> std::ws;
+    std::getline(std::cin, director);
+
+    std::size_t startIndex = 0;
+    bool found = false;
+
+    while (const auto result = catalog.findIf(
+        [&director](const std::shared_ptr<Performance>& performance) {
+            return performance &&
+                   performance->getDirector() == director;
+        }, startIndex)) {
+
+        std::cout << "\nСпектакль найден. Номер: "
+                  << *result + 1 << "\n";
+
+        catalog.get(*result)->displayInfo();
+
+        found = true;
+
+        // Продолжаем поиск со следующего элемента
+        startIndex = *result + 1;
+    }
+
+    if (!found) {
+        std::cout << "Спектакли данного режиссёра не найдены.\n";
+    }
+}
     
 
     void removePerformance(

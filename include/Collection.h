@@ -59,15 +59,18 @@ public:
     }
 
     template <typename Predicate>
-    std::optional<std::size_t> findIf(Predicate predicate) const {
-        for (std::size_t i = 0; i < items.size(); ++i) {
-            if (predicate(items[i])) {
-                return i;
-            }
-        }
+std::optional<std::size_t> findIf(
+    Predicate predicate,
+    std::size_t startIndex = 0) const {
 
-        return std::nullopt;
+    for (std::size_t i = startIndex; i < items.size(); ++i) {
+        if (predicate(items[i])) {
+            return i;
+        }
     }
+    
+    return std::nullopt;
+}
 
     std::size_t size() const noexcept {
         return items.size();
