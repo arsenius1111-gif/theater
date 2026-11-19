@@ -305,8 +305,5 @@ while (running) {
         std::cout << "Выход за границы коллекции: "
                   << e.what() << '\n';
     }
-    catch (const std::exception& e) {
-        std::cout << "Непредвиденная ошибка: " << e.what() << '\n';
-    }
 }
 }

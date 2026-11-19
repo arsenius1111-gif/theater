@@ -210,9 +210,6 @@ while (running) {
     catch (const InvalidDataException& e) {
         std::cout << "Ошибка данных: " << e.what() << '\n';
     }
-    catch (const std::exception& e) {
-        std::cout << "Ошибка: " << e.what() << '\n';
-    }
 }
 }
 
@@ -400,9 +397,6 @@ try {
 catch (const InvalidDataException& e) {
     std::cout << "Ошибка создания спектакля: " << e.what() << '\n';
 }
-catch (const std::exception& e) {
-    std::cout << "Непредвиденная ошибка: " << e.what() << '\n';
-}
 }
 
 void PerformanceMenu::compare(
@@ -584,9 +578,6 @@ while (running) {
     }
     catch (const InvalidDataException& e) {
         std::cout << "Ошибка данных: " << e.what() << '\n';
-    }
-    catch (const std::exception& e) {
-        std::cout << "Непредвиденная ошибка: " << e.what() << '\n';
     }
 }
 }
