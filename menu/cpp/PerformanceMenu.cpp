@@ -3,8 +3,8 @@
 #include "Musical.h"
 #include "Opera.h"
 
-#include "../../Exceptions/InvalidDataException.h"
-#include "../../Exceptions/OutOfRangeException.h"
+#include "../../exceptions/InvalidDataException.h"
+#include "../../exceptions/OutOfRangeException.h"
 
 #include <algorithm>
 #include <exception>
@@ -238,35 +238,42 @@ void findPerformance(
 }
 
 void findPerformanceByDirector(
-    const Collection<std::shared_ptr<Performance>>& catalog) {
+const Collection<std::shared_ptr<Performance>>& catalog) {
 
-    std::string director;
+std::string director;
 
-    std::cout << "Введите имя или фамилию режиссёра: ";
-    std::cin >> std::ws;
-    std::getline(std::cin, director);
+std::cout << "Введите имя или фамилию режиссёра: ";
+std::cin >> std::ws;
+std::getline(std::cin, director);
 
-    std::size_t startIndex = 0;
-    bool found = false;
+std::size_t startIndex = 0;
+bool found = false;
 
-    while (const auto result = catalog.findIf(
+while (true) {
+    const auto result = catalog.findIf(
         [&director](const std::shared_ptr<Performance>& performance) {
             return performance &&
                    performance->getDirector() == director;
-        }, startIndex)) {
+        },
+        startIndex
+    );
 
-        std::cout << "\nСпектакль найден. Номер: "
-                  << *result + 1 << "\n";
-
-        catalog.get(*result)->displayInfo();
-
-        found = true;
-        startIndex = *result + 1;
+    if (!result.has_value()) {
+        break;
     }
 
-    if (!found) {
-        std::cout << "Спектакли данного режиссёра не найдены.\n";
-    }
+    std::cout << "\nСпектакль найден. Номер: "
+              << *result + 1 << "\n";
+
+    catalog.get(*result)->displayInfo();
+
+    found = true;
+    startIndex = *result + 1;
+}
+
+if (!found) {
+    std::cout << "Спектакли данного режиссёра не найдены.\n";
+}
 }
 
 void removePerformance(
