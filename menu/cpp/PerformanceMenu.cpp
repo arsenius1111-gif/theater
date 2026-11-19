@@ -226,7 +226,6 @@ namespace {
 
         found = true;
 
-        // Продолжаем поиск со следующего элемента
         startIndex = *result + 1;
     }
 
