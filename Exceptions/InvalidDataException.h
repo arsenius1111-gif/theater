@@ -1,13 +1,8 @@
 #pragma once
 
 #include <stdexcept>
-#include <string>
 
-class InvalidDataException : public std::runtime_error
-{
+class InvalidDataException : public std::runtime_error {
 public:
-    explicit InvalidDataException(const std::string& message)
-        : std::runtime_error(message)
-    {
-    }
+    using std::runtime_error::runtime_error;
 };

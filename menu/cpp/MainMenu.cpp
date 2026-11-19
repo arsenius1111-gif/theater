@@ -5,17 +5,16 @@
 #include "Musical.h"
 #include "Opera.h"
 
-#include "../../Exceptions/InvalidDataException.h"
-#include "../../Exceptions/DuplicateHallException.h"
-#include "../../Exceptions/CapacityExceededException.h"
-#include "../../Exceptions/NotFoundException.h"
-#include "../../Exceptions/OutOfRangeException.h"
-#include "../../Exceptions/InvalidOperationException.h"
+#include "../../exceptions/InvalidDataException.h"
+#include "../../exceptions/DuplicateHallException.h"
+#include "../../exceptions/CapacityExceededException.h"
+#include "../../exceptions/NotFoundException.h"
+#include "../../exceptions/OutOfRangeException.h"
+#include "../../exceptions/InvalidOperationException.h"
 
 #include <iostream>
 #include <memory>
 #include <limits>
-#include <exception>
 
 MainMenu::MainMenu() {
 initDatabase();
@@ -47,6 +46,45 @@ halls[0] += catalog[0];
 halls[0] += catalog[1];
 }
 
+namespace {
+void processMainMenuChoice(
+int choice,
+Collection<Hall>& halls,
+Collection<std::shared_ptr<Performance>>& catalog,
+bool& running) {
+
+switch (choice) {
+case 1:
+    PerformanceMenu::showAll(catalog);
+    break;
+case 2:
+    HallMenu::manage(halls, catalog);
+    break;
+case 3:
+    PerformanceMenu::compare(catalog);
+    break;
+case 4:
+    PerformanceMenu::create(catalog);
+    break;
+case 5:
+    HallMenu::create(halls);
+    break;
+case 6:
+    PerformanceMenu::showInheritanceDemo();
+    break;
+case 7:
+    PerformanceMenu::manageCollection(catalog);
+    break;
+case 0:
+    running = false;
+    std::cout << "Программа завершена.\n";
+    break;
+default:
+    std::cout << "Такого пункта меню нет.\n";
+}
+}
+}
+
 void MainMenu::run() {
 bool running = true;
 
@@ -71,34 +109,7 @@ while (running) {
     }
 
     try {
-        if (choice == 1) {
-            PerformanceMenu::showAll(catalog);
-        }
-        else if (choice == 2) {
-            HallMenu::manage(halls, catalog);
-        }
-        else if (choice == 3) {
-            PerformanceMenu::compare(catalog);
-        }
-        else if (choice == 4) {
-            PerformanceMenu::create(catalog);
-        }
-        else if (choice == 5) {
-            HallMenu::create(halls);
-        }
-        else if (choice == 6) {
-            PerformanceMenu::showInheritanceDemo();
-        }
-        else if (choice == 7) {
-            PerformanceMenu::manageCollection(catalog);
-        }
-        else if (choice == 0) {
-            running = false;
-            std::cout << "Программа завершена.\n";
-        }
-        else {
-            std::cout << "Такого пункта меню нет.\n";
-        }
+        processMainMenuChoice(choice, halls, catalog, running);
     }
     catch (const InvalidDataException& e) {
         std::cout << "Ошибка данных: " << e.what() << '\n';
@@ -119,9 +130,6 @@ while (running) {
     }
     catch (const InvalidOperationException& e) {
         std::cout << "Недопустимая операция: " << e.what() << '\n';
-    }
-    catch (const std::exception& e) {
-        std::cout << "Непредвиденная ошибка: " << e.what() << '\n';
     }
 }
 }

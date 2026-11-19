@@ -4,9 +4,13 @@
 Performance::Performance()
 : title(""), director(""), genre("") {}
 
-Performance::Performance(std::string_view title_,
-std::string_view director_, std::string_view genre_,
-int duration_, int ageRestriction_)
+Performance::Performance(
+std::string_view title_,
+std::string_view director_,
+std::string_view genre_,
+int duration_,
+int ageRestriction_
+)
 : title(title_),
 director(director_),
 genre(genre_),
@@ -93,7 +97,8 @@ return title == other.title;
 }
 
 std::strong_ordering Performance::operator<=>(
-const Performance& other) const {
+const Performance& other
+) const {
 return duration <=> other.duration;
 }
 

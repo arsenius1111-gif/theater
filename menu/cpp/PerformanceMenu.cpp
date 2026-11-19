@@ -7,6 +7,7 @@
 #include "../../exceptions/OutOfRangeException.h"
 
 #include <algorithm>
+#include <exception>
 #include <iostream>
 #include <limits>
 #include <memory>
@@ -15,7 +16,6 @@
 #include <utility>
 
 namespace {
-
 bool readChoice(int& choice) {
 if (std::cin >> choice) {
 return true;
@@ -23,8 +23,7 @@ return true;
 
 std::cin.clear();
 std::cin.ignore(
-    (std::numeric_limits<std::streamsize>::max)(), '\n'
-);
+    (std::numeric_limits<std::streamsize>::max)(), '\n');
 
 std::cout << "Ошибка ввода. Введите число.\n";
 return false;
@@ -45,8 +44,7 @@ if (!readChoice(type)) {
 
 if (type < 1 || type > 3) {
     throw InvalidDataException(
-        "Выбран неизвестный тип спектакля."
-    );
+        "Выбран неизвестный тип спектакля.");
 }
 
 std::string title;
@@ -60,8 +58,7 @@ std::getline(std::cin, title);
 
 if (title.empty()) {
     throw InvalidDataException(
-        "Название спектакля не может быть пустым."
-    );
+        "Название спектакля не может быть пустым.");
 }
 
 std::cout << "Введите режиссёра: ";
@@ -69,8 +66,7 @@ std::getline(std::cin, director);
 
 if (director.empty()) {
     throw InvalidDataException(
-        "Имя режиссёра не может быть пустым."
-    );
+        "Имя режиссёра не может быть пустым.");
 }
 
 std::cout << "Введите длительность в минутах: ";
@@ -81,8 +77,7 @@ if (!readChoice(duration)) {
 
 if (duration <= 0) {
     throw InvalidDataException(
-        "Длительность должна быть положительной."
-    );
+        "Длительность должна быть положительной.");
 }
 
 std::cout << "Введите возрастное ограничение: ";
@@ -93,8 +88,7 @@ if (!readChoice(ageRestriction)) {
 
 if (ageRestriction < 0) {
     throw InvalidDataException(
-        "Возрастное ограничение не может быть отрицательным."
-    );
+        "Возрастное ограничение не может быть отрицательным.");
 }
 
 switch (type) {
@@ -109,13 +103,11 @@ case 1: {
 
     if (dancersCount <= 0) {
         throw InvalidDataException(
-            "Количество танцоров должно быть положительным."
-        );
+            "Количество танцоров должно быть положительным.");
     }
 
     return std::make_shared<Ballet>(
-        title, director, duration, ageRestriction, dancersCount
-    );
+        title, director, duration, ageRestriction, dancersCount);
 }
 
 case 2: {
@@ -129,14 +121,12 @@ case 2: {
 
     if (recitatives != 0 && recitatives != 1) {
         throw InvalidDataException(
-            "Необходимо ввести 1 или 0."
-        );
+            "Необходимо ввести 1 или 0.");
     }
 
     return std::make_shared<Opera>(
         title, director, duration, ageRestriction,
-        recitatives == 1
-    );
+        recitatives == 1);
 }
 
 case 3: {
@@ -150,20 +140,17 @@ case 3: {
 
     if (liveBand != 0 && liveBand != 1) {
         throw InvalidDataException(
-            "Необходимо ввести 1 или 0."
-        );
+            "Необходимо ввести 1 или 0.");
     }
 
     return std::make_shared<Musical>(
         title, director, duration, ageRestriction,
-        liveBand == 1
-    );
+        liveBand == 1);
 }
 
 default:
     throw InvalidDataException(
-        "Выбран неизвестный тип спектакля."
-    );
+        "Выбран неизвестный тип спектакля.");
 }
 }
 
@@ -199,12 +186,12 @@ while (running) {
             std::string title;
 
             std::cout << "Введите новое название: ";
-            std::cin >> std::ws;std::getline(std::cin, title);
+            std::cin >> std::ws;
+            std::getline(std::cin, title);
 
             if (title.empty()) {
                 throw InvalidDataException(
-                    "Название не может быть пустым."
-                );
+                    "Название не может быть пустым.");
             }
 
             performance.setTitle(title);
@@ -218,31 +205,31 @@ while (running) {
 
         default:
             std::cout << "Такого пункта меню нет.\n";
-            break;
         }
     }
     catch (const InvalidDataException& e) {
         std::cout << "Ошибка данных: " << e.what() << '\n';
     }
+    catch (const std::exception& e) {
+        std::cout << "Ошибка: " << e.what() << '\n';
+    }
 }
 }
 
 void findPerformance(
-const Collection<std::shared_ptr<Performance>>& catalog
-) {
+const Collection<std::shared_ptr<Performance>>& catalog) {
+
 std::string title;
 
 std::cout << "Введите название спектакля для поиска: ";
 std::cin >> std::ws;
 std::getline(std::cin, title);
 
-const auto result = catalog.findIf(
+if (const auto result = catalog.findIf(
     [&title](const std::shared_ptr<Performance>& performance) {
         return performance && performance->getTitle() == title;
-    }
-);
+    }); result.has_value()) {
 
-if (result.has_value()) {
     std::cout << "Спектакль найден. Номер: "
               << *result + 1 << "\n";
     catalog.get(*result)->displayInfo();
@@ -253,8 +240,8 @@ else {
 }
 
 void findPerformanceByDirector(
-const Collection<std::shared_ptr<Performance>>& catalog
-) {
+const Collection<std::shared_ptr<Performance>>& catalog) {
+
 std::string director;
 
 std::cout << "Введите имя или фамилию режиссёра: ";
@@ -292,11 +279,11 @@ if (!found) {
 }
 
 void removePerformance(
-Collection<std::shared_ptr<Performance>>& catalog
-) {
+Collection<std::shared_ptr<Performance>>& catalog) {
+
 if (catalog.empty()) {
-std::cout << "Коллекция пуста.\n";
-return;
+    std::cout << "Коллекция пуста.\n";
+    return;
 }
 
 PerformanceMenu::showAll(catalog);
@@ -320,11 +307,11 @@ if (catalog.removeAt(static_cast<std::size_t>(index - 1))) {
 }
 
 void getPerformance(
-const Collection<std::shared_ptr<Performance>>& catalog
-) {
+const Collection<std::shared_ptr<Performance>>& catalog) {
+
 if (catalog.empty()) {
-std::cout << "Коллекция пуста.\n";
-return;
+    std::cout << "Коллекция пуста.\n";
+    return;
 }
 
 int index = 0;
@@ -337,8 +324,7 @@ if (!readChoice(index)) {
 
 if (index < 1 || index > static_cast<int>(catalog.size())) {
     throw OutOfRangeException(
-        "Указан индекс за пределами коллекции."
-    );
+        "Указан индекс за пределами коллекции.");
 }
 
 const auto& performance =
@@ -353,11 +339,11 @@ else {
 }
 
 void iterateCollection(
-const Collection<std::shared_ptr<Performance>>& catalog
-) {
+const Collection<std::shared_ptr<Performance>>& catalog) {
+
 if (catalog.empty()) {
-std::cout << "Коллекция пуста.\n";
-return;
+    std::cout << "Коллекция пуста.\n";
+    return;
 }
 
 std::cout << "\nПеребор коллекции с помощью итераторов:\n";
@@ -372,15 +358,13 @@ std::ranges::for_each(
         if (performance) {
             performance->displayInfo();
         }
-    }
-);
+    });
 }
-
 }
 
 void PerformanceMenu::showAll(
-const Collection<std::shared_ptr<Performance>>& catalog
-) {
+const Collection<std::shared_ptr<Performance>>& catalog) {
+
 std::cout << "\n========== КАТАЛОГ СПЕКТАКЛЕЙ ==========\n";
 
 if (catalog.empty()) {
@@ -398,8 +382,8 @@ for (const auto& performance : catalog) {
     }
 }
 }void PerformanceMenu::create(
-Collection<std::shared_ptr<Performance>>& catalog
-) {
+Collection<std::shared_ptr<Performance>>& catalog) {
+
 std::cout << "\n========== ДОБАВЛЕНИЕ СПЕКТАКЛЯ ==========\n";
 
 try {
@@ -414,17 +398,19 @@ try {
     std::cout << "Спектакль добавлен в каталог.\n";
 }
 catch (const InvalidDataException& e) {
-    std::cout << "Ошибка создания спектакля: "
-              << e.what() << '\n';
+    std::cout << "Ошибка создания спектакля: " << e.what() << '\n';
+}
+catch (const std::exception& e) {
+    std::cout << "Непредвиденная ошибка: " << e.what() << '\n';
 }
 }
 
 void PerformanceMenu::compare(
-const Collection<std::shared_ptr<Performance>>& catalog
-) {
+const Collection<std::shared_ptr<Performance>>& catalog) {
+
 if (catalog.size() < 2) {
-std::cout << "Для сравнения нужны минимум два спектакля.\n";
-return;
+    std::cout << "Для сравнения нужны минимум два спектакля.\n";
+    return;
 }
 
 showAll(catalog);
@@ -483,18 +469,15 @@ Collection<std::shared_ptr<Performance>> performances;
 
 performances.add(std::make_shared<Ballet>(
     "Лебединое озеро", "Мариус Петипа",
-    140, 6, 24
-));
+    140, 6, 24));
 
 performances.add(std::make_shared<Opera>(
     "Евгений Онегин", "Константин Сергеев",
-    160, 12, true
-));
+    160, 12, true));
 
 performances.add(std::make_shared<Musical>(
     "Чикаго", "Боб Фосси",
-    150, 16, true
-));
+    150, 16, true));
 
 bool running = true;
 
@@ -532,8 +515,8 @@ while (running) {
 }
 
 void PerformanceMenu::manageCollection(
-Collection<std::shared_ptr<Performance>>& catalog
-) {
+Collection<std::shared_ptr<Performance>>& catalog) {
+
 bool running = true;
 
 while (running) {
@@ -571,11 +554,11 @@ while (running) {
 
         case 4:
             findPerformanceByDirector(catalog);
+            break;case 5:
+            removePerformance(catalog);
             break;
 
-        case 5:
-            removePerformance(catalog);
-            break;case 6:
+        case 6:
             getPerformance(catalog);
             break;
 
@@ -594,7 +577,6 @@ while (running) {
 
         default:
             std::cout << "Такого пункта меню нет.\n";
-            break;
         }
     }
     catch (const OutOfRangeException& e) {
@@ -602,6 +584,9 @@ while (running) {
     }
     catch (const InvalidDataException& e) {
         std::cout << "Ошибка данных: " << e.what() << '\n';
+    }
+    catch (const std::exception& e) {
+        std::cout << "Непредвиденная ошибка: " << e.what() << '\n';
     }
 }
 }

@@ -117,14 +117,29 @@ const T& operator[](std::size_t index) const {
     return items[index];
 }
 
-iterator begin() noexcept { return items.begin(); }
-iterator end() noexcept { return items.end(); }
+iterator begin() noexcept {
+    return items.begin();
+}
 
-const_iterator begin() const noexcept { return items.begin(); }
-const_iterator end() const noexcept { return items.end(); }
+iterator end() noexcept {
+    return items.end();
+}
 
-const_iterator cbegin() const noexcept { return items.cbegin(); }
-const_iterator cend() const noexcept { return items.cend(); }
+const_iterator begin() const noexcept {
+    return items.begin();
+}
+
+const_iterator end() const noexcept {
+    return items.end();
+}
+
+const_iterator cbegin() const noexcept {
+    return items.cbegin();
+}
+
+const_iterator cend() const noexcept {
+    return items.cend();
+}
 
 template <typename OutputFunction>
 void display(std::ostream& output, OutputFunction formatter) const {

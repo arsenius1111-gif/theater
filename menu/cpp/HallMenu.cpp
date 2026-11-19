@@ -3,6 +3,7 @@
 #include <iostream>
 #include <limits>
 #include <memory>
+#include <exception>
 
 #include "../../exceptions/InvalidDataException.h"
 #include "../../exceptions/DuplicateHallException.h"
@@ -12,7 +13,6 @@
 #include "../../exceptions/OutOfRangeException.h"
 
 namespace {
-
 bool readNumber(int& value) {
 if (std::cin >> value) {
 return true;
@@ -20,8 +20,7 @@ return true;
 
 std::cin.clear();
 std::cin.ignore(
-    (std::numeric_limits<std::streamsize>::max)(), '\n'
-);
+    (std::numeric_limits<std::streamsize>::max)(), '\n');
 
 std::cout << "Ошибка ввода. Введите целое число.\n";
 return false;
@@ -100,7 +99,6 @@ return true;
 
 void sellTickets(Hall& hall) {
 int count = 0;
-
 std::cout << "Сколько билетов продать: ";
 
 if (readNumber(count)) {
@@ -138,7 +136,6 @@ for (std::size_t i = 0; i < performances.size(); ++i) {
 }
 
 int index = 0;
-
 std::cout << "Выберите номер спектакля для удаления: ";
 
 if (!readNumber(index)) {
@@ -163,7 +160,6 @@ hall -= *selected;
 
 void changeCapacity(Hall& hall) {
 int capacity = 0;
-
 std::cout << "Введите новую вместимость: ";
 
 if (readNumber(capacity)) {
@@ -190,38 +186,29 @@ bool& running) {
 
 switch (choice) {
 case 1:
-    hall.displayFullInfo();
+    hall.displayFullInfo();break;
+case 2:
+    sellTickets(hall);
     break;
-
-case 2:sellTickets(hall);
-    break;
-
 case 3:
     addPerformance(hall, catalog);
     break;
-
 case 4:
     removePerformance(hall);
     break;
-
 case 5:
     changeCapacity(hall);
     break;
-
 case 6:
     printHallAnalytics(hall);
     break;
-
 case 0:
     running = false;
     break;
-
 default:
     std::cout << "Такого пункта меню нет.\n";
-    break;
 }
 }
-
 }
 
 void HallMenu::create(Collection<Hall>& halls) {
@@ -317,6 +304,9 @@ while (running) {
     catch (const OutOfRangeException& e) {
         std::cout << "Выход за границы коллекции: "
                   << e.what() << '\n';
+    }
+    catch (const std::exception& e) {
+        std::cout << "Непредвиденная ошибка: " << e.what() << '\n';
     }
 }
 }
