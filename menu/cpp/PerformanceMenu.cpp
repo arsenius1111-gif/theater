@@ -214,26 +214,46 @@ while (running) {
 }
 
 void findPerformance(
-const Collection<std::shared_ptr<Performance>>& catalog) {
+    const Collection<std::shared_ptr<Performance>>& catalog) {
 
-std::string title;
+    std::string title;
 
-std::cout << "Введите название спектакля для поиска: ";
-std::cin >> std::ws;
-std::getline(std::cin, title);
+    std::cout << "Введите название спектакля для поиска: ";
+    std::cin >> std::ws;
+    std::getline(std::cin, title);
 
-if (const auto result = catalog.findIf(
-    [&title](const std::shared_ptr<Performance>& performance) {
-        return performance && performance->getTitle() == title;
-    }); result.has_value()) {
+    std::size_t startIndex = 0;
+    bool found = false;
 
-    std::cout << "Спектакль найден. Номер: "
-              << *result + 1 << "\n";
-    catalog.get(*result)->displayInfo();
-}
-else {
-    std::cout << "Спектакль не найден.\n";
-}
+    auto result = catalog.findIf(
+        [&title](const std::shared_ptr<Performance>& performance) {
+            return performance && performance->getTitle() == title;
+        },
+        startIndex
+    );
+
+    while (result.has_value()) {
+
+        found = true;
+
+        std::cout << "\nСпектакль найден. Номер: "
+                  << *result + 1 << "\n";
+
+        catalog.get(*result)->displayInfo();
+
+        startIndex = *result + 1;
+
+        result = catalog.findIf(
+            [&title](const std::shared_ptr<Performance>& performance) {
+                return performance && performance->getTitle() == title;
+            },
+            startIndex
+        );
+    }
+
+    if (!found) {
+        std::cout << "Спектакль не найден.\n";
+    }
 }
 
 void findPerformanceByDirector(
