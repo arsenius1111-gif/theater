@@ -5,12 +5,12 @@
 #include <memory>
 #include <exception>
 
-#include "../../exceptions/InvalidDataException.h"
-#include "../../exceptions/DuplicateHallException.h"
-#include "../../exceptions/CapacityExceededException.h"
-#include "../../exceptions/NotFoundException.h"
-#include "../../exceptions/InvalidOperationException.h"
-#include "../../exceptions/OutOfRangeException.h"
+#include "../../Exceptions/InvalidDataException.h"
+#include "../../Exceptions/DuplicateHallException.h"
+#include "../../Exceptions/CapacityExceededException.h"
+#include "../../Exceptions/NotFoundException.h"
+#include "../../Exceptions/InvalidOperationException.h"
+#include "../../Exceptions/OutOfRangeException.h"
 
 namespace {
 bool readNumber(int& value) {

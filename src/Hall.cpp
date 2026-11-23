@@ -1,9 +1,9 @@
 #include "Hall.h"
 
-#include "../exceptions/InvalidDataException.h"
-#include "../exceptions/CapacityExceededException.h"
-#include "../exceptions/NotFoundException.h"
-#include "../exceptions/InvalidOperationException.h"
+#include "../Exceptions/InvalidDataException.h"
+#include "../Exceptions/CapacityExceededException.h"
+#include "../Exceptions/NotFoundException.h"
+#include "../Exceptions/InvalidOperationException.h"
 
 #include <iostream>
 #include <utility>

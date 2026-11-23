@@ -5,12 +5,12 @@
 #include "Musical.h"
 #include "Opera.h"
 
-#include "../../exceptions/InvalidDataException.h"
-#include "../../exceptions/DuplicateHallException.h"
-#include "../../exceptions/CapacityExceededException.h"
-#include "../../exceptions/NotFoundException.h"
-#include "../../exceptions/OutOfRangeException.h"
-#include "../../exceptions/InvalidOperationException.h"
+#include "../../Exceptions/InvalidDataException.h"
+#include "../../Exceptions/DuplicateHallException.h"
+#include "../../Exceptions/CapacityExceededException.h"
+#include "../../Exceptions/NotFoundException.h"
+#include "../../Exceptions/OutOfRangeException.h"
+#include "../../Exceptions/InvalidOperationException.h"
 
 #include <iostream>
 #include <memory>

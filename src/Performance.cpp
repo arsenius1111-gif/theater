@@ -1,5 +1,5 @@
 #include "Performance.h"
-#include "../exceptions/InvalidDataException.h"
+#include "../Exceptions/InvalidDataException.h"
 
 Performance::Performance()
 : title(""), director(""), genre("") {}

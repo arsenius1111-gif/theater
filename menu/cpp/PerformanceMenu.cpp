@@ -3,8 +3,8 @@
 #include "Musical.h"
 #include "Opera.h"
 
-#include "../../exceptions/InvalidDataException.h"
-#include "../../exceptions/OutOfRangeException.h"
+#include "../../Exceptions/InvalidDataException.h"
+#include "../../Exceptions/OutOfRangeException.h"
 
 #include <algorithm>
 #include <exception>

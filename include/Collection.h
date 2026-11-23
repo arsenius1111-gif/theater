@@ -8,7 +8,7 @@
 #include <vector>
 #include <ostream>
 
-#include "../exceptions/OutOfRangeException.h"
+#include "../Exceptions/OutOfRangeException.h"
 
 template <typename T>
 class Collection {
